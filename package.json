@@ -1,0 +1,9 @@
+{
+  "name": "ultimate-guide-to-uaa-examples",
+  "version": "0.1.0",
+  "description": "Example UAA clients for the Ultimate Guide to UAA book",
+  "main": "index.js",
+  "repository": "https://github.com/starkandwayne/ultimate-guide-to-uaa-examples",
+  "author": "Dr Nic Williams <drnicwilliams@gmail.com>",
+  "license": "Apache-2.0"
+}
