@@ -1,13 +1,19 @@
-# Ruby OmniAuth example
+# Ruby OmniAuth - Simple Login Only
 
 First, create a UAA client:
 
 ```text
 uaa-deployment auth-client
-uaa create-client omniauth-example -s omniauth-example \
+uaa create-client omniauth-login-only -s omniauth-login-only \
   --authorized_grant_types authorization_code,refresh_token \
   --scope openid \
   --redirect_uri http://localhost:9292/auth/cloudfoundry/callback
+```
+
+Next, setup `$UAA_URL`/`$UAA_CA_CERT`:
+
+```text
+source <(path/to/uaa-deployment/bin/uaa-deployment env)
 ```
 
 Next, run the app:

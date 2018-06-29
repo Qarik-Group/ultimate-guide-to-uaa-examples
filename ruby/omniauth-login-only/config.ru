@@ -1,7 +1,10 @@
 # Run with "bundle exec rackup"
 
+# Setup $UAA_URL/$UAA_CA_CERT
+# source <(path/to/uaa-deployment/bin/uaa-deployment env)
+#
 # Create UAA client:
-# uaa create-client omniauth-example -s omniauth-example \
+# uaa create-client omniauth-login-only -s omniauth-login-only \
 #   --authorized_grant_types authorization_code,refresh_token \
 #   --scope openid \
 #   --redirect_uri http://localhost:9292/auth/cloudfoundry/callback
@@ -35,7 +38,7 @@ end
 use Rack::Session::Cookie, :secret => ENV['RACK_COOKIE_SECRET']
 
 use OmniAuth::Builder do
-  provider :cloudfoundry, 'omniauth-example', 'omniauth-example', {
+  provider :cloudfoundry, 'omniauth-login-only', 'omniauth-login-only', {
     auth_server_url: ENV['UAA_URL'],
     token_server_url: ENV['UAA_URL'],
     scope: %w[openid],
