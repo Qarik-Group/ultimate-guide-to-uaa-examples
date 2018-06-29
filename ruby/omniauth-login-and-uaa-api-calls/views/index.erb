@@ -1,0 +1,7 @@
+<ul>
+  <% if session[:user_email] %>
+  <li><%= session[:user_email] %></li>
+  <% else %>
+  <li><a href='/auth/cloudfoundry'>Sign in with Cloud Foundry</a></li>
+  <% end %>
+</ul>
