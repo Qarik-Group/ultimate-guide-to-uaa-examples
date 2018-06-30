@@ -9,7 +9,7 @@
 #     --scope openid,scim.read \
 #     --redirect_uri http://localhost:9292/auth/cloudfoundry/callback
 #
-# Add user drnic to group scim.read:
+# Add user to group "scim.read":
 #   uaa add-member scim.read drnic
 
 require 'rubygems'
@@ -82,7 +82,6 @@ use OmniAuth::Builder do
   provider :cloudfoundry, 'omniauth-login-and-uaa-api-calls', 'omniauth-login-and-uaa-api-calls', {
     auth_server_url: ENV['UAA_URL'],
     token_server_url: ENV['UAA_URL'],
-    scope: ["openid", "scim.read"],
     skip_ssl_validation: ENV['UAA_CA_CERT'] != '',
     redirect_uri: 'http://localhost:9292/auth/cloudfoundry/callback'
   }
