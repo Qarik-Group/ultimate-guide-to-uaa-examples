@@ -1,27 +1,12 @@
-PATH
-  remote: /Users/drnic/Projects/uaa/cf-uaa-lib
+GEM
+  remote: https://rubygems.org/
   specs:
     cf-uaa-lib (3.14.3)
       httpclient (~> 2.8, >= 2.8.2.4)
       multi_json (~> 1.12.0, >= 1.12.1)
-
-PATH
-  remote: /Users/drnic/Projects/uaa/omniauth-uaa-oauth2
-  specs:
-    omniauth-uaa-oauth2 (0.0.6)
-      cf-uaa-lib (>= 3.2, < 4.0)
-      omniauth (~> 1.0)
-
-GEM
-  remote: https://rubygems.org/
-  specs:
-    hashie (3.5.7)
     httpclient (2.8.3)
     multi_json (1.12.2)
     mustermann (1.0.2)
-    omniauth (1.8.1)
-      hashie (>= 3.4.6, < 3.6.0)
-      rack (>= 1.6.2, < 3)
     rack (2.0.5)
     rack-protection (2.0.3)
       rack
@@ -39,9 +24,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
-  cf-uaa-lib!
-  omniauth
-  omniauth-uaa-oauth2!
+  cf-uaa-lib
   shotgun
   sinatra
 

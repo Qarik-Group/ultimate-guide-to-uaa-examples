@@ -3,8 +3,6 @@
 require 'rubygems'
 require 'bundler'
 require 'sinatra'
-require 'omniauth'
-require 'omniauth-uaa-oauth2'
 require 'securerandom'
 require 'uaa'
 
