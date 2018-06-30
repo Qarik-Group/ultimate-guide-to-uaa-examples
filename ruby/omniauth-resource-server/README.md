@@ -52,7 +52,7 @@ uaa context --access_token
 uaa context --auth_header
 ```
 
-Pass the access_token into the `-H 'Authorization: bearer <access_token>'` below:
+Pass the `uaa context --auth_header` into the `-H 'Authorization:'` below:
 
 ```text
 $ curl -s -H "Authorization: $(uaa context --auth_header)" http://localhost:9292 | jq length
@@ -62,13 +62,13 @@ $ curl -s -H "Authorization: $(uaa context --auth_header)" http://localhost:9292
 The airports app attempts to decode the access token and if successful will expand the limit to 20 airports. The decoded token is dumped to the logs:
 
 ```json
-{"jti":"c695b5fca6354ba0a1e0175894056405","sub":"871a53d4-11ac-437b-ba28-c84b795b0221","scope":["openid"],"client_id":"uaa-cli-authcode","cid":"uaa-cli-authcode","azp":"uaa-cli-authcode","grant_type":"authorization_code","user_id":"871a53d4-11ac-437b-ba28-c84b795b0221","origin":"uaa","user_name":"drnic","email":"drnic@starkandwayne.com","auth_time":1530340069,"rev_sig":"1dc7b713","iat":1530340077,"exp":1530383277,"iss":"https://192.168.50.6:8443/oauth/token","zid":"uaa","aud":["uaa-cli-authcode","openid"]}
+{"jti":"ce148a7201634537b0f9da4af24ba91e","sub":"2b4f7895-9a67-4274-a6fd-d2257d492e00","scope":["openid"],"client_id":"airports","cid":"airports","azp":"airports","grant_type":"password","user_id":"2b4f7895-9a67-4274-a6fd-d2257d492e00","origin":"uaa","user_name":"airports-no-scope","email":"airports-no-scope@example.com","auth_time":1530388796,"rev_sig":"d5e8bdec","iat":1530388796,"exp":1530431996,"iss":"https://192.168.50.6:8443/oauth/token","zid":"uaa","aud":["openid","airports"]}
 ```
 
 The airports app attempts to perform a "whoami" request with the UAA, and if successful increases the API limit to 20. It also dumps the `/userinfo` output to its logs so we can see who is accessing our API:
 
 ```json
-{"user_id":"871a53d4-11ac-437b-ba28-c84b795b0221","user_name":"drnic","name":"Dr Nic Williams","given_name":"Dr Nic","family_name":"Williams","email":"drnic@starkandwayne.com","email_verified":true,"previous_logon_time":1530334456892,"sub":"871a53d4-11ac-437b-ba28-c84b795b0221"}
+{"user_id":"2b4f7895-9a67-4274-a6fd-d2257d492e00","user_name":"airports-no-scope","name":"Airports No Scope","given_name":"Airports","family_name":"No Scope","email":"airports-no-scope@example.com","email_verified":true,"previous_logon_time":1530387812642,"sub":"2b4f7895-9a67-4274-a6fd-d2257d492e00"}
 ```
 
 Create some user groups/client scopes that might grant to users:
