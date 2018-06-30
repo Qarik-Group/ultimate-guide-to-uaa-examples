@@ -13,7 +13,7 @@ Create a UAA client that includes only `openid` (we will add `scim.read` later):
 uaa create-client omniauth-login-and-uaa-api-calls -s omniauth-login-and-uaa-api-calls \
   --authorized_grant_types authorization_code,refresh_token \
   --scope openid \
-  --redirect_uri http://localhost:9292/auth/cloudfoundry/callback
+  --redirect_uri http://localhost:9292/auth/cloudfoundry/callback,http://127.0.0.1:9292/auth/cloudfoundry/callback
 ```
 
 Create a demo user with only `openid` scope:
