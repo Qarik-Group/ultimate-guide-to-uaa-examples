@@ -1,4 +1,4 @@
-# Scope access to API
+# Applications filter results from UAA user scopes
 
 First, add `uaa-deployment` into the `$PATH` and setup `$UAA_URL`/`$UAA_CA_CERT`:
 
