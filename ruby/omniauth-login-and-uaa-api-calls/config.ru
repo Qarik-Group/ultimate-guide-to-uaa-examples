@@ -45,6 +45,10 @@ class App < Sinatra::Base
         issuer = CF::UAA::TokenIssuer.new(ENV['UAA_URL'],
           'omniauth-login-and-uaa-api-calls', 'omniauth-login-and-uaa-api-calls', options)
         token_info = issuer.refresh_token_grant(session[:refresh_token])
+
+        # Does the refresh_token ever change?
+        session[:refresh_token] = token_info.info["refresh_token"]
+
         scim = CF::UAA::Scim.new(ENV['UAA_URL'], token_info.auth_header, options)
         scim.query(:user).to_json
       rescue CF::UAA::TargetError => e
