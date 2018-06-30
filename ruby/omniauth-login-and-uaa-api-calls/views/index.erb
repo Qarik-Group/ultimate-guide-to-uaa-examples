@@ -1,9 +1,6 @@
 <ul>
-  <% if session[:user_email] %>
   <li><%= session[:user_email] %>
     ( <%= session[:authorized_scopes] %> ) </li>
+  <li><a href='/users'>List Users</a></lu>
   <li><a href='/logout'>Log out</a></li>
-  <% else %>
-  <li><a href='/auth/cloudfoundry'>Sign in with Cloud Foundry</a></li>
-  <% end %>
 </ul>
