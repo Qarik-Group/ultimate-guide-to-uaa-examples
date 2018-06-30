@@ -12,7 +12,13 @@ require 'uaa'
 class App < Sinatra::Base
   airports = JSON.load(File.read('airports.json'))
   uaa_url = ENV['UAA_URL']
-  uaa_options = {skip_ssl_validation: ENV['UAA_CA_CERT'] != '', symbolize_keys: true}
+  uaa_options = {symbolize_keys: true}
+  if ENV['UAA_CA_CERT_FILE'] && File.exists?(ENV['UAA_CA_CERT_FILE'])
+    uaa_options[:ssl_ca_file] = ENV['UAA_CA_CERT_FILE']
+  else
+    uaa_options[:skip_ssl_validation] = !!ENV['UAA_CA_CERT']
+  end
+  puts uaa_options.to_json
 
   get '/' do
     content_type 'application/json'
