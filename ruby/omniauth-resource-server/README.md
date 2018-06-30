@@ -59,16 +59,10 @@ $ curl -s -H "Authorization: $(uaa context --auth_header)" http://localhost:9292
 30
 ```
 
-The airports app attempts to decode the access token and if successful will expand the limit to 20 airports. The decoded token is dumped to the logs:
+The airports app attempts to decode the access token, to confirm it originated from its UAA and used the `airports` client ID, and if successful will expand the limit to 20 airports. The decoded token is dumped to the logs:
 
 ```json
 {"jti":"ce148a7201634537b0f9da4af24ba91e","sub":"2b4f7895-9a67-4274-a6fd-d2257d492e00","scope":["openid"],"client_id":"airports","cid":"airports","azp":"airports","grant_type":"password","user_id":"2b4f7895-9a67-4274-a6fd-d2257d492e00","origin":"uaa","user_name":"airports-no-scope","email":"airports-no-scope@example.com","auth_time":1530388796,"rev_sig":"d5e8bdec","iat":1530388796,"exp":1530431996,"iss":"https://192.168.50.6:8443/oauth/token","zid":"uaa","aud":["openid","airports"]}
-```
-
-The airports app attempts to perform a "whoami" request with the UAA, and if successful increases the API limit to 20. It also dumps the `/userinfo` output to its logs so we can see who is accessing our API:
-
-```json
-{"user_id":"2b4f7895-9a67-4274-a6fd-d2257d492e00","user_name":"airports-no-scope","name":"Airports No Scope","given_name":"Airports","family_name":"No Scope","email":"airports-no-scope@example.com","email_verified":true,"previous_logon_time":1530387812642,"sub":"2b4f7895-9a67-4274-a6fd-d2257d492e00"}
 ```
 
 Create some user groups/client scopes that might grant to users:
