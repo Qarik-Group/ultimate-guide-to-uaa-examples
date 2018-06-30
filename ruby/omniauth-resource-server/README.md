@@ -49,12 +49,13 @@ Next, authenticate one of the users with the UAA to get an "access_token":
 ```text
 uaa get-password-token airports -s airports -u airports-no-scope -p airports-no-scope
 uaa context --access_token
+uaa context --auth_header
 ```
 
 Pass the access_token into the `-H 'Authorization: bearer <access_token>'` below:
 
 ```text
-$ curl -s -H "Authorization: bearer $(uaa context --access_token)" http://localhost:9292 | jq length
+$ curl -s -H "Authorization: $(uaa context --auth_header)" http://localhost:9292 | jq length
 30
 ```
 
@@ -89,12 +90,12 @@ Login as `airports-50` user and see that the Airports API now returns 50 results
 
 ```text
 uaa get-password-token airports -s airports -u airports-50 -p airports-50
-curl -s -H "Authorization: bearer $(uaa context --access_token)" http://localhost:9292 | jq length
+curl -s -H "Authorization: $(uaa context --auth_header)" http://localhost:9292 | jq length
 ```
 
 Finally, login as `airports-all` user and see that the Airports API now returns all 297 results:
 
 ```text
 uaa get-password-token airports -s airports -u airports-all -p airports-all
-curl -s -H "Authorization: bearer $(uaa context --access_token)" http://localhost:9292 | jq length
+curl -s -H "Authorization: $(uaa context --auth_header)" http://localhost:9292 | jq length
 ```
