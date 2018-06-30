@@ -40,7 +40,8 @@ The home page will show "viewer-of-users@example.com ( openid )", where `openid`
 The "List Users" code in Ruby is:
 
 ```ruby
-scim = CF::UAA::Scim.new(ENV['UAA_URL'], "bearer #{session[:access_token]}", options)
+token_info = issuer.refresh_token_grant(session[:refresh_token])
+scim = CF::UAA::Scim.new(ENV['UAA_URL'], token_info.auth_header, options)
 scim.query(:user).to_json
 ```
 
@@ -88,5 +89,20 @@ uaa update-client omniauth-login-and-uaa-api-calls \
 The `/users` page will error with:
 
 ```json
-{"error":"invalid_token","error_description":"Some scopes have been revoked: scim.read","authorized_scopes":"openid scim.read"}
+{
+    "error":"invalid_token",
+    "error_description":"Some scopes have been revoked: scim.read",
+    "authorized_scopes":"openid scim.read"
+}
+```
+
+Logout again - so that the application's tokens forget what `authorized_scopes` they previously received, and log back in. The "List Users" page will now show the original authorization error:
+
+```json
+{
+    "error":"insufficient_scope",
+    "error_description":"Insufficient scope for this resource",
+    "scope":"uaa.admin scim.read zones.uaa.admin",
+    "authorized_scopes":"openid"
+}
 ```
