@@ -1,27 +1,60 @@
 # Scope access to API
 
+First, add `uaa-deployment` into the `$PATH` and setup `$UAA_URL`/`$UAA_CA_CERT`:
+
+```text
+source <(path/to/uaa-deployment/bin/uaa-deployment env)
+uaa-deployment auth-client
+```
+
+Create some demo users:
+
+```text
+uaa create-user airports-all --password airports-all \
+  --email airports-all@example.com \
+  --givenName "Airports" --familyName "All"
+uaa create-user airports-50 --password airports-50 \
+  --email airports-50@example.com \
+  --givenName "Airports" --familyName "50"
+uaa create-user airports-no-scope --password airports-no-scope \
+  --email airports-no-scope@example.com \
+  --givenName "Airports" --familyName "No Scope"
+```
+
+Run the Airports API application:
+
 ```text
 bundle
 bundle exec rackup
 ```
 
-If you access the API as a guest you will receive a JSON array of 10 airports:
+You can access the API as a non-authenticated guest and will receive a JSON array of 10 airports:
 
 ```text
-$ curl -s http://localhost:9292 | jq "length"
+$ curl -s http://localhost:9292 | jq length
 10
 ```
 
-Next, authenticate with the UAA to get an "access_token":
+Now create a dedicated Airports client:
 
 ```text
-uaa get-authcode-token uaa-cli-authcode -s uaa-cli-authcode --port 9876 -v
+uaa create-client airports -s airports \
+  --authorized_grant_types password,authorization_code,refresh_token \
+  --scope airports.all,airports.50,openid \
+  --redirect_uri http://localhost:9876
+```
+
+Next, authenticate one of the users with the UAA to get an "access_token":
+
+```text
+uaa get-password-token airports -s airports -u airports-no-scope -p airports-no-scope
+uaa context --access_token
 ```
 
 Pass the access_token into the `-H 'Authorization: bearer <access_token>'` below:
 
 ```text
-$ curl -s http://localhost:9292 -H 'Authorization: bearer <access_token>' | jq "length"
+$ curl -s -H "Authorization: bearer $(uaa context --access_token)" http://localhost:9292 | jq length
 30
 ```
 
@@ -40,35 +73,28 @@ The airports app attempts to perform a "whoami" request with the UAA, and if suc
 Create some user groups/client scopes that might grant to users:
 
 ```text
+uaa-deployment auth-client
 uaa create-group airports.all -d "Display all airports"
 uaa create-group airports.50 -d "Display 50 airports"
 ```
 
-Now create a dedicated Airports client:
+Grant your `airports-all` user access to all airports (implemented via scope `airports-all`), and `airports-50` user access to scope `airports.50`.
 
 ```text
-uaa create-client airports -s airports \
-  --authorized_grant_types authorization_code,refresh_token \
-  --scope airports.all,airports.50,openid \
-  --redirect_uri http://localhost:9876
+uaa add-member airports.all airports-all
+uaa add-member airports.50 airports-50
 ```
 
-Grant your user access to all airports:
+Login as `airports-50` user and see that the Airports API now returns 50 results:
 
 ```text
-uaa add-member airports.all drnic
+uaa get-password-token airports -s airports -u airports-50 -p airports-50
+curl -s -H "Authorization: bearer $(uaa context --access_token)" http://localhost:9292 | jq length
 ```
 
-Login again:
+Finally, login as `airports-all` user and see that the Airports API now returns all 297 results:
 
 ```text
-uaa get-authcode-token airports -s airports --port 9876 -v
+uaa get-password-token airports -s airports -u airports-all -p airports-all
+curl -s -H "Authorization: bearer $(uaa context --access_token)" http://localhost:9292 | jq length
 ```
-
-Copy the new access token from the output into your curl command:
-
-```text
-$ curl -s http://localhost:9292 -H 'Authorization: bearer <new access_token>' | jq "length"
-297
-```
-

@@ -29,6 +29,8 @@ class App < Sinatra::Base
 
         if decoder["scope"].include?("airports.all")
           limit = -1
+        elsif decoder["scope"].include?("airports.50")
+          limit = 50
         end
       rescue CF::UAA::TargetError => e
         return e.info.to_json
