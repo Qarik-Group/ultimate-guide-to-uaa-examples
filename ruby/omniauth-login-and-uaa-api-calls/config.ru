@@ -17,19 +17,29 @@ require 'omniauth-uaa-oauth2'
 require 'securerandom'
 
 class App < Sinatra::Base
-  use Rack::Session::Cookie, key: 'rack.omniauth-login-and-uaa-api-calls',
-                           path: '/',
-                           expire_after: 2592000, # In seconds
-                           secret: ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
+  use Rack::Session::Cookie,
+      key: 'rack.omniauth-login-and-uaa-api-calls',
+      path: '/',
+      expire_after: 2592000, # In seconds
+      secret: ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
 
   get '/' do
     erb :index
   end
 
+  get '/logout' do
+    session[:user_email] = nil
+    session[:access_token] = nil
+    redirect('/')
+  end
+
   get '/auth/cloudfoundry/callback' do
     content_type 'application/json'
     auth = request.env['omniauth.auth']
-    session[:user_email] = auth["info"]["email"]
+    session[:user_email] = auth.info.email
+    session[:access_token] = auth.credentials.token
+    # session[:refresh_token] = auth.credentials.refresh_token
+    session[:authorized_scopes] = auth.credentials.authorized_scopes
     redirect('/')
   rescue "No Data"
   end
