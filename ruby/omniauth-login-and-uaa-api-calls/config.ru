@@ -21,11 +21,6 @@ require 'securerandom'
 require 'uaa'
 
 class App < Sinatra::Base
-  use Rack::Session::Cookie,
-      key: 'rack.omniauth-login-and-uaa-api-calls',
-      path: '/',
-      expire_after: 2592000, # In seconds
-      secret: ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
 
   get '/' do
     if session[:user_email]
@@ -44,10 +39,13 @@ class App < Sinatra::Base
 
   get '/users' do
     content_type 'application/json'
-    if session[:access_token]
+    if session[:refresh_token]
       begin
         options = {skip_ssl_validation: ENV['UAA_CA_CERT'] != ''}
-        scim = CF::UAA::Scim.new(ENV['UAA_URL'], "bearer #{session[:access_token]}", options)
+        issuer = CF::UAA::TokenIssuer.new(ENV['UAA_URL'],
+          'omniauth-login-and-uaa-api-calls', 'omniauth-login-and-uaa-api-calls', options)
+        token_info = issuer.refresh_token_grant(session[:refresh_token])
+        scim = CF::UAA::Scim.new(ENV['UAA_URL'], token_info.auth_header, options)
         scim.query(:user).to_json
       rescue CF::UAA::TargetError => e
         e.info.merge(authorized_scopes: session[:authorized_scopes]).to_json
@@ -63,8 +61,8 @@ class App < Sinatra::Base
     content_type 'application/json'
     auth = request.env['omniauth.auth']
     session[:user_email] = auth.info.email
-    session[:access_token] = auth.credentials.token
-    # session[:refresh_token] = auth.credentials.refresh_token
+    # session[:access_token] = auth.credentials.token
+    session[:refresh_token] = auth.credentials.refresh_token
     session[:authorized_scopes] = auth.credentials.authorized_scopes
     redirect('/')
   rescue "No Data"
@@ -76,7 +74,11 @@ class App < Sinatra::Base
   end
 end
 
-use Rack::Session::Cookie, :secret => ENV['RACK_COOKIE_SECRET']
+use Rack::Session::Cookie,
+  key: 'rack.omniauth-login-and-uaa-api-calls',
+  path: '/',
+  expire_after: 2592000, # In seconds
+  secret: ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
 
 use OmniAuth::Builder do
   provider :cloudfoundry, 'omniauth-login-and-uaa-api-calls', 'omniauth-login-and-uaa-api-calls', {
