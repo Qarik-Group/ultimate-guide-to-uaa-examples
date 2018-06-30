@@ -19,11 +19,17 @@ class App < Sinatra::Base
     limit = 10
     if auth_header = request.env['HTTP_AUTHORIZATION']
       begin
+        decoder = CF::UAA::TokenCoder.decode(auth_header.split(' ')[1], verify: false)
+        puts decoder.to_json
+        limit = 20
         info = CF::UAA::Info.new(uaa_url, uaa_options)
         who = info.whoami(auth_header)
         puts who.to_json
-        limit = 20
-        who
+        limit = 30
+
+        if decoder["scope"].include?("airports.all")
+          limit = -1
+        end
       rescue CF::UAA::TargetError => e
         return e.info.to_json
       rescue CF::UAA::InvalidToken => e
