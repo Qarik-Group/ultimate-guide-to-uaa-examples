@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+
+gem 'bundler'
+# gem 'cf-uaa-lib'
+gem 'cf-uaa-lib', path: '/Users/drnic/Projects/uaa/cf-uaa-lib'
+gem 'highline'
+gem 'httpclient'

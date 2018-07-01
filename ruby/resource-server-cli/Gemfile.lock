@@ -1,0 +1,25 @@
+PATH
+  remote: /Users/drnic/Projects/uaa/cf-uaa-lib
+  specs:
+    cf-uaa-lib (3.14.3)
+      httpclient (~> 2.8, >= 2.8.2.4)
+      multi_json (~> 1.12.0, >= 1.12.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    highline (2.0.0)
+    httpclient (2.8.3)
+    multi_json (1.12.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  cf-uaa-lib!
+  highline
+  httpclient
+
+BUNDLED WITH
+   1.16.1
