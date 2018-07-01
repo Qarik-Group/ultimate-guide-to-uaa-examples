@@ -21,30 +21,30 @@ Enter the user credentials for `airports-no-scope`, with password `airports-no-s
 ```text
 username > airports-no-scope
 password > *****************
-+-------------------------------------+------+
-| Name                                | ICAO |
-+-------------------------------------+------+
-| Brisbane Archerfield Airport        | YBAF |
-| Northern Peninsula Airport          | YBAM |
-| Alice Springs Airport               | YBAS |
-| Brisbane International Airport      | YBBN |
-| Gold Coast Airport                  | YBCG |
-| Cairns International Airport        | YBCS |
-| Charleville Airport                 | YBCV |
-| Mount Isa Airport                   | YBMA |
-| Sunshine Coast Airport              | YBMC |
-| Mackay Airport                      | YBMK |
-| Proserpine Whitsunday Coast Airport | YBPN |
-| Rockhampton Airport                 | YBRK |
-| Townsville Airport                  | YBTL |
-| Weipa Airport                       | YBWP |
-| Avalon Airport                      | YMAV |
-| Albury Airport                      | YMAY |
-| Melbourne Essendon Airport          | YMEN |
-| RAAF Base East Sale                 | YMES |
-| Hobart International Airport        | YMHB |
-| Launceston Airport                  | YMLT |
-+-------------------------------------+------+
++-------------------------------------+------+----------+
+| Name                                | ICAO | Altitude |
++-------------------------------------+------+----------+
+| Brisbane Archerfield Airport        | YBAF | 63       |
+| Northern Peninsula Airport          | YBAM | 34       |
+| Alice Springs Airport               | YBAS | 1789     |
+| Brisbane International Airport      | YBBN | 13       |
+| Gold Coast Airport                  | YBCG | 21       |
+| Cairns International Airport        | YBCS | 10       |
+| Charleville Airport                 | YBCV | 1003     |
+| Mount Isa Airport                   | YBMA | 1121     |
+| Sunshine Coast Airport              | YBMC | 15       |
+| Mackay Airport                      | YBMK | 19       |
+| Proserpine Whitsunday Coast Airport | YBPN | 82       |
+| Rockhampton Airport                 | YBRK | 34       |
+| Townsville Airport                  | YBTL | 18       |
+| Weipa Airport                       | YBWP | 63       |
+| Avalon Airport                      | YMAV | 35       |
+| Albury Airport                      | YMAY | 539      |
+| Melbourne Essendon Airport          | YMEN | 282      |
+| RAAF Base East Sale                 | YMES | 23       |
+| Hobart International Airport        | YMHB | 13       |
+| Launceston Airport                  | YMLT | 562      |
++-------------------------------------+------+----------+
 ```
 
 The username and password are not stored. Instead, the CLI only stores the access token/refresh token/token type etc.
@@ -61,13 +61,13 @@ To "log out", delete this file, and run the CLI to login as `airports-50` or `ai
 $ bundle exec cli.rb
 username > airports-all
 password > ************
-+-------------------------------------+------+
-| Name                                | ICAO |
-+-------------------------------------+------+
-| Brisbane Archerfield Airport        | YBAF |
-| Northern Peninsula Airport          | YBAM |
-| Alice Springs Airport               | YBAS |
-| Brisbane International Airport      | YBBN |
-| Gold Coast Airport                  | YBCG |
++-------------------------------------+------+----------+
+| Name                                | ICAO | Altitude |
++-------------------------------------+------+----------+
+| Brisbane Archerfield Airport        | YBAF | 63       |
+| Northern Peninsula Airport          | YBAM | 34       |
+| Alice Springs Airport               | YBAS | 1789     |
+| Brisbane International Airport      | YBBN | 13       |
+| Gold Coast Airport                  | YBCG | 21       |
 ...297 results...
 ```

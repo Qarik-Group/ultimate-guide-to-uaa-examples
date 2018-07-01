@@ -44,8 +44,8 @@ begin
   httpclient.default_header = {"Authorization": token_info.auth_header}
   airports = JSON.parse(httpclient.get(airports_url).body)
 
-  rows = airports.map {|airport| [airport["Name"], airport["ICAO"]]}
-  table = Terminal::Table.new :headings => ['Name', 'ICAO'], :rows => rows
+  rows = airports.map {|airport| [airport["Name"], airport["ICAO"], airport["Altitude"]]}
+  table = Terminal::Table.new :headings => ['Name', 'ICAO', 'Altitude'], :rows => rows
   puts table
 rescue CF::UAA::TargetError => e
   $stderr.puts e.info
