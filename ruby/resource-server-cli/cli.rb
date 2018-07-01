@@ -38,10 +38,15 @@ begin
   end
 
   user_config = JSON.parse(File.read(user_config_path))
-  token_info = CF::UAA::TokenInfo.new(user_config)
+  stored_token = CF::UAA::TokenInfo.new(user_config)
+
+  # renew access_token in case it has expired
+  issuer = CF::UAA::TokenIssuer.new(uaa_url, uaa_client, uaa_client_secret, uaa_options)
+  token = issuer.refresh_token_grant(stored_token.info["refresh_token"])
+  File.open(user_config_path, "w") {|f| f << token.info.to_json}
 
   httpclient = HTTPClient.new
-  httpclient.default_header = {"Authorization": token_info.auth_header}
+  httpclient.default_header = {"Authorization": token.auth_header}
   airports = JSON.parse(httpclient.get(airports_url).body)
 
   rows = airports.map {|airport| [airport["Name"], airport["ICAO"], airport["Altitude"]]}
