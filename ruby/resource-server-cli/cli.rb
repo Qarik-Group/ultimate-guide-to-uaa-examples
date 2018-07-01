@@ -3,6 +3,7 @@
 require 'json'
 require 'uaa'
 require 'highline'
+require 'terminal-table'
 
 uaa_url = ENV['UAA_URL']
 uaa_client = "airports"
@@ -41,7 +42,11 @@ begin
 
   httpclient = HTTPClient.new
   httpclient.default_header = {"Authorization": token_info.auth_header}
-  puts httpclient.get(airports_url).body
+  airports = JSON.parse(httpclient.get(airports_url).body)
+
+  rows = airports.map {|airport| [airport["Name"], airport["ICAO"]]}
+  table = Terminal::Table.new :headings => ['Name', 'ICAO'], :rows => rows
+  puts table
 rescue CF::UAA::TargetError => e
   $stderr.puts e.info
 end
