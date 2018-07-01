@@ -97,6 +97,6 @@ curl -s -H "Authorization: $(uaa context --auth_header)" http://localhost:9292 |
 ## Docker
 
 ```text
-docker build -t starkandwayne/omniauth-resource-server .
-docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT starkandwayne/omniauth-resource-server
+docker build -t starkandwayne/uaa-example-resource-server .
+docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT starkandwayne/uaa-example-resource-server
 ```
