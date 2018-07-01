@@ -106,3 +106,10 @@ Logout again - so that the application's tokens forget what `authorized_scopes` 
     "authorized_scopes":"openid"
 }
 ```
+
+## Docker
+
+```text
+docker build -t starkandwayne/uaa-example-omniauth-login-and-uaa-api-calls .
+docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT starkandwayne/uaa-example-omniauth-login-and-uaa-api-calls
+```
