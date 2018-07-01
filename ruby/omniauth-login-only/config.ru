@@ -35,7 +35,11 @@ class App < Sinatra::Base
   end
 end
 
-use Rack::Session::Cookie, :secret => ENV['RACK_COOKIE_SECRET']
+use Rack::Session::Cookie,
+  key: 'rack.omniauth-login-only',
+  path: '/',
+  expire_after: 2592000, # In seconds
+  secret: ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
 
 use OmniAuth::Builder do
   provider :cloudfoundry, 'omniauth-login-only', 'omniauth-login-only', {

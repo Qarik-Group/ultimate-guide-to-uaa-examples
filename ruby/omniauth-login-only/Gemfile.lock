@@ -1,6 +1,7 @@
 GIT
-  remote: https://github.com/cloudfoundry/omniauth-uaa-oauth2
-  revision: 319ed4ba2315ab379bfa32fd464411e3c963562b
+  remote: https://github.com/drnic/omniauth-uaa-oauth2
+  revision: dae82731a2f08c2ba1678e95b6302553757efb21
+  branch: avoid-deprecation-warning
   specs:
     omniauth-uaa-oauth2 (0.0.6)
       cf-uaa-lib (>= 3.2, < 4.0)
