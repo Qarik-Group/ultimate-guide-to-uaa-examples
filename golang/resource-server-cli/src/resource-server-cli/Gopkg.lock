@@ -2,13 +2,14 @@
 
 
 [[projects]]
+  branch = "tokens"
   name = "github.com/cloudfoundry-community/go-uaa"
   packages = [
     ".",
     "passwordcredentials"
   ]
-  revision = "377005ac1e67d387c4e4ba66000fd3f2f35bda8b"
-  version = "v0.0.9"
+  revision = "4b3b8002f7f13dd6d5c945a811104c86b8fc3141"
+  source = "github.com/drnic/go-uaa"
 
 [[projects]]
   name = "github.com/fatih/color"
@@ -88,6 +89,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "868ad61e097ffea7848f911b5aedb4e290018384709d4f652fc9e7d02c809403"
+  inputs-digest = "068aa416bd6f6cea7af9267f5d3f75c36b4c662d71374b459079832583f4192c"
   solver-name = "gps-cdcl"
   solver-version = 1

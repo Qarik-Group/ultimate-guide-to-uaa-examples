@@ -25,6 +25,11 @@
 #   unused-packages = true
 
 
+[[constraint]]
+  name = "github.com/cloudfoundry-community/go-uaa"
+  branch = "tokens"
+  source = "github.com/drnic/go-uaa"
+
 [prune]
   go-tests = true
   unused-packages = true
