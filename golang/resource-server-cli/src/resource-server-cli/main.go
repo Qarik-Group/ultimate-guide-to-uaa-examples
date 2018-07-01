@@ -2,6 +2,7 @@ package main
 
 import (
 	"crypto/tls"
+	"crypto/x509"
 	"fmt"
 	"log"
 	"net/http"
@@ -37,9 +38,15 @@ func main() {
 	}
 	creds.API.Verbose = opts.Verbose
 	if opts.UAACACert != "" {
-		creds.API.SkipSSLValidation = true
+		rootCAs, _ := x509.SystemCertPool()
+		if rootCAs == nil {
+			rootCAs = x509.NewCertPool()
+		}
+		rootCAs.AppendCertsFromPEM([]byte(opts.UAACACert))
 		tr := &http.Transport{
-			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+			TLSClientConfig: &tls.Config{
+				RootCAs: rootCAs,
+			},
 		}
 		creds.API.UnauthenticatedClient = &http.Client{Transport: tr}
 	}
