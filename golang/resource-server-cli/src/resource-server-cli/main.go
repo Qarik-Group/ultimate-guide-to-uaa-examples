@@ -15,7 +15,7 @@ var opts struct {
 	AirportsURL string `long:"airports-url" env:"AIRPORTS_URL" default:"https://localhost:9292"`
 	UAAURL      string `long:"uaa-url" env:"UAA_URL" description:"Target UAA URL, e.g. https://login.mycompany.com:8443"`
 	UAACACert   string `long:"uaa-ca-cert" env:"UAA_CA_CERT"`
-	UAAZoneID   string `kong:"uaa-zone-id" env:"UAA_ZONE_ID"`
+	UAAZoneID   string `long:"uaa-zone-id" env:"UAA_ZONE_ID"`
 	Username    string `short:"u" long:"username" env:"UAA_USERNAME" description:"Username for authenticated user"`
 	Password    string `short:"p" long:"password" env:"UAA_PASSWORD" description:"Password for authenticated user"`
 	Verbose     bool   `short:"v" long:"verbose" description:"Show verbose debug information" env:"UAA_TRACE"`
