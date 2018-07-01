@@ -5,6 +5,8 @@ require 'uaa'
 require 'highline'
 require 'terminal-table'
 
+# Typically the target app API (the Airports web app) would publish its
+# UAA URL etc in a public endpoints; for example https://api.run.pivotal.io/v2/info
 uaa_url = ENV['UAA_URL']
 uaa_client = "airports"
 uaa_client_secret = "airports"
