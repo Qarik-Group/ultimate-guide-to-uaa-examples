@@ -10,6 +10,7 @@ gem 'omniauth'
 # gem 'omniauth-uaa-oauth2', git: 'https://github.com/drnic/omniauth-uaa-oauth2', branch: 'root-ca'
 gem 'omniauth-uaa-oauth2', path: '/Users/drnic/Projects/uaa/omniauth-uaa-oauth2'
 gem 'cf-uaa-lib', path: '/Users/drnic/Projects/uaa/cf-uaa-lib'
+gem 'httpclient'
 
 group :development do
   gem 'shotgun'

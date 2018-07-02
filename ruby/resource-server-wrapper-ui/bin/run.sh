@@ -18,4 +18,4 @@ else
   echo "${UAA_CA_CERT}" > "${UAA_CA_CERT_FILE}"
 fi
 
-bundle exec rackup --host 0.0.0.0
+bundle exec rackup --host 0.0.0.0 --port ${PORT:-9393}

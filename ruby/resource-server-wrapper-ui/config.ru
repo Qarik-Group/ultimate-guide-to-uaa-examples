@@ -19,7 +19,9 @@ require 'omniauth'
 require 'omniauth-uaa-oauth2'
 require 'securerandom'
 require 'uaa'
+require 'httpclient'
 
+AIRPORTS_URL = ENV['AIRPORTS_URL'] || 'http://localhost:9292'
 UAA_URL = ENV['UAA_URL']
 UAA_CLIENT = 'airports-map'
 UAA_CLIENT_SECRET = 'airports-map'
@@ -29,7 +31,7 @@ if ENV['UAA_CA_CERT_FILE'] && File.exists?(ENV['UAA_CA_CERT_FILE'])
 else
   UAA_OPTIONS[:skip_ssl_validation] = !!ENV['UAA_CA_CERT']
 end
-puts UAA_OPTIONS.to_json
+# puts UAA_OPTIONS.to_json
 
 class App < Sinatra::Base
 
@@ -41,6 +43,37 @@ class App < Sinatra::Base
     end
   end
 
+  get '/airports.json' do
+    content_type 'application/json'
+
+    token = nil
+    httpclient = HTTPClient.new
+    httpclient.default_header = {"Authorization": token.auth_header} if token
+    airports = JSON.parse(httpclient.get(AIRPORTS_URL).body)
+
+    # fetch localhost:9292 to get airports (with session[:access_token] if set)
+    # convert into FeatureCollection
+    features = airports.map do |airport|
+      lat = airport["Latitude"]
+      long = airport["Longitude"]
+      {
+        "type": "Feature",
+        "properties": {
+          "title": airport["ICAO"]
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [long, lat]
+        }
+      }
+    end
+    collection = {
+      type: 'FeatureCollection',
+      features: features
+    }
+    collection.to_json
+  end
+
   get '/logout' do
     session[:user_email] = nil
     session[:access_token] = nil
@@ -49,8 +82,6 @@ class App < Sinatra::Base
   end
 
   get '/auth/cloudfoundry/callback' do
-    puts "SESSION on callback:"
-    p session
     content_type 'application/json'
     auth = request.env['omniauth.auth']
     session[:user_email] = auth.info.email

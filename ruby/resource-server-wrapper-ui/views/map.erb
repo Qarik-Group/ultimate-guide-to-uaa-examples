@@ -10,4 +10,21 @@ var map = new mapboxgl.Map({
   center: [133.5,-24.25],
   zoom: 2
 });
+map.on('load', function () {
+  map.addSource('airports', {
+    type: 'geojson',
+    data: '/airports.json'
+  });
+  map.addLayer({
+      "id": "airports",
+      "type": "symbol",
+      "source": "airports",
+      "layout": {
+          "text-field": "{title}",
+          "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+          "text-offset": [0, 0],
+          "text-anchor": "top"
+      }
+  });
+});
 </script>
