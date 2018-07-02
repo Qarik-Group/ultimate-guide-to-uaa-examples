@@ -14,6 +14,7 @@ import (
 
 	"github.com/cloudfoundry-community/go-uaa"
 	"github.com/jessevdk/go-flags"
+	"github.com/miquella/ask"
 )
 
 var opts struct {
@@ -55,7 +56,16 @@ func main() {
 	}
 
 	if _, err := os.Stat(opts.UserConfigPath); os.IsNotExist(err) {
-		creds, err := uaa.NewWithPasswordCredentials(opts.UAAURL, opts.UAAZoneID, UAAClient, UAAClientSecret, opts.Username, opts.Password, uaa.JSONWebToken)
+		username := opts.Username
+		if username == "" {
+			username, _ = ask.Ask("Username> ")
+		}
+		password := opts.Password
+		if password == "" {
+			password, _ = ask.HiddenAsk("Password> ")
+		}
+
+		creds, err := uaa.NewWithPasswordCredentials(opts.UAAURL, opts.UAAZoneID, UAAClient, UAAClientSecret, username, password, uaa.JSONWebToken)
 		if err != nil {
 			log.Fatal(err)
 		}
