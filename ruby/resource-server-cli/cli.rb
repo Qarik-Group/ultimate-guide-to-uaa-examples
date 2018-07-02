@@ -4,6 +4,7 @@ require 'json'
 require 'uaa'
 require 'highline'
 require 'terminal-table'
+require 'httpclient'
 
 # Typically the target app API (the Airports web app) would publish its
 # UAA URL etc in a public endpoints; for example https://api.run.pivotal.io/v2/info
