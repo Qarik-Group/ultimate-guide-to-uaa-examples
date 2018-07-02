@@ -1,6 +1,7 @@
 FROM ruby:2.5
 
 EXPOSE 9292
+ENV PORT=9292
 
 ADD . /app
 

@@ -1,0 +1,27 @@
+version: "3"
+services:
+  airports:
+    # replace username/repo:tag with your name and image details
+    image: starkandwayne/uaa-example-resource-server
+    ports:
+      - 9292:9292
+    networks:
+      - webnet
+    environment:
+      - UAA_URL
+      - UAA_CA_CERT
+  map:
+    # replace username/repo:tag with your name and image details
+    image: starkandwayne/uaa-example-resource-server-wrapper-ui
+    ports:
+      - 9393:9393
+    networks:
+      - webnet
+    depends_on:
+      - airports
+    environment:
+      - AIRPORTS_URL=http://airports:9292
+      - UAA_URL
+      - UAA_CA_CERT
+networks:
+  webnet:
