@@ -34,3 +34,10 @@ Visit the site as a guest to see a maximum of 10 airports (zoom in to see more):
 Login as `airports-all` user to see all the airports (zoom in to see more):
 
 ![airports-map-scope-all](airports-map-scope-all.png)
+
+## Docker
+
+```text
+docker build -t starkandwayne/uaa-example-resource-server-wrapper-ui .
+docker run -ti -p 9393:9393 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT starkandwayne/uaa-example-resource-server-wrapper-ui
+```

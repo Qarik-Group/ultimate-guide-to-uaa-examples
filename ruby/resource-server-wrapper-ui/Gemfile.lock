@@ -1,12 +1,7 @@
-PATH
-  remote: /Users/drnic/Projects/uaa/cf-uaa-lib
-  specs:
-    cf-uaa-lib (3.14.3)
-      httpclient (~> 2.8, >= 2.8.2.4)
-      multi_json (~> 1.12.0, >= 1.12.1)
-
-PATH
-  remote: /Users/drnic/Projects/uaa/omniauth-uaa-oauth2
+GIT
+  remote: https://github.com/drnic/omniauth-uaa-oauth2
+  revision: 3915369bcec4b70a3f236cba72a8775c349c1a5e
+  branch: root-ca
   specs:
     omniauth-uaa-oauth2 (0.0.6)
       cf-uaa-lib (>= 3.2, < 4.0)
@@ -15,6 +10,9 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    cf-uaa-lib (3.14.3)
+      httpclient (~> 2.8, >= 2.8.2.4)
+      multi_json (~> 1.12.0, >= 1.12.1)
     hashie (3.5.7)
     httpclient (2.8.3)
     multi_json (1.12.2)
@@ -39,7 +37,6 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
-  cf-uaa-lib!
   httpclient
   omniauth
   omniauth-uaa-oauth2!
