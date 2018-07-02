@@ -29,20 +29,14 @@ var opts struct {
 }
 
 type airport struct {
-	AirportID          int     `json:"Airport ID"`
-	Name               string  `json:"Name"`
-	City               string  `json:"City"`
-	Country            string  `json:"Country"`
-	IATA               string  `json:"IATA"`
-	ICAO               string  `json:"ICAO"`
-	Latitude           float64 `json:"Latitude"`
-	Longitude          float64 `json:"Longitude"`
-	Altitude           int     `json:"Altitude"`
-	Timezone           float64 `json:"Timezone"`
-	DST                string  `json:"DST"`
-	TzDatabaseTimeZone string  `json:"Tz database time zone"`
-	Type               string  `json:"Type"`
-	Source             string  `json:"Source"`
+	Name      string  `json:"Name"`
+	City      string  `json:"City"`
+	ICAO      string  `json:"ICAO"`
+	Latitude  float64 `json:"Latitude"`
+	Longitude float64 `json:"Longitude"`
+	Altitude  int     `json:"Altitude"`
+	Timezone  float64 `json:"Timezone"`
+	DST       string  `json:"DST"`
 }
 
 func main() {
