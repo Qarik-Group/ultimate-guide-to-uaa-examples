@@ -6,7 +6,7 @@
 # Create UAA client:
 #   uaa create-client airports-map -s airports-map \
 #     --authorized_grant_types authorization_code,refresh_token \
-#     --scope openid,airports-50,airports-all \
+#     --scope openid,airports.50,airports.all \
 #     --redirect_uri http://localhost:9393/auth/cloudfoundry/callback
 #
 # Run as :9393 (assuming backend airports app on :9292)
@@ -46,7 +46,11 @@ class App < Sinatra::Base
   get '/airports.json' do
     content_type 'application/json'
 
-    token = nil
+    token = if session[:refresh_token]
+      issuer = CF::UAA::TokenIssuer.new(UAA_URL, UAA_CLIENT, UAA_CLIENT_SECRET, UAA_OPTIONS)
+      issuer.refresh_token_grant(session[:refresh_token])
+    end
+
     httpclient = HTTPClient.new
     httpclient.default_header = {"Authorization": token.auth_header} if token
     airports = JSON.parse(httpclient.get(AIRPORTS_URL).body)
@@ -76,7 +80,7 @@ class App < Sinatra::Base
 
   get '/logout' do
     session[:user_email] = nil
-    session[:access_token] = nil
+    session[:refresh_token] = nil
     session[:authorized_scopes] = nil
     redirect('/')
   end
@@ -85,7 +89,6 @@ class App < Sinatra::Base
     content_type 'application/json'
     auth = request.env['omniauth.auth']
     session[:user_email] = auth.info.email
-    # session[:access_token] = auth.credentials.token
     session[:refresh_token] = auth.credentials.refresh_token
     session[:authorized_scopes] = auth.credentials.authorized_scopes
     redirect('/')

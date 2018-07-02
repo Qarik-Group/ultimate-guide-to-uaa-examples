@@ -32,7 +32,8 @@ class App < Sinatra::Base
         who = info.whoami(auth_header)
         puts who.to_json
 
-        if decoder["client_id"] == "airports" && decoder["iss"] == "#{ENV['UAA_URL']}/oauth/token"
+        # if decoder["client_id"] == "airports" && decoder["iss"] == "#{ENV['UAA_URL']}/oauth/token"
+        if decoder["iss"] == "#{ENV['UAA_URL']}/oauth/token"
           limit = 20
 
           if decoder["scope"].include?("airports.all")
@@ -47,6 +48,7 @@ class App < Sinatra::Base
         return e.info.to_json
       end
     end
+    puts "Limit: #{limit}"
     airports[0...limit].to_json
   end
 end
