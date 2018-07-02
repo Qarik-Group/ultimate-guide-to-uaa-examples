@@ -21,9 +21,18 @@ uaa create-client airports-map -s airports-map \
   --redirect_uri http://localhost:9393/auth/cloudfoundry/callback
 ```
 
+You can run this app and the backend `resource-server` (Airports API) using Docker Compose:
+
+```text
+docker-compose up
+```
+
+Alternately, run locally using `rackup` or `shotgun` via Ruby:
+
 Run as :9393 (assuming backend airports app on :9292)
 
 ```text
+bundle
 bundle exec shotgun -p 9393
 ```
 
