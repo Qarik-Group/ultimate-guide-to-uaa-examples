@@ -26,3 +26,11 @@ Run as :9393 (assuming backend airports app on :9292)
 ```text
 bundle exec shotgun -p 9393
 ```
+
+Visit the site as a guest to see a maximum of 10 airports (zoom in to see more):
+
+![airports-map-guest](airports-map-guest.png)
+
+Login as `airports-all` user to see all the airports (zoom in to see more):
+
+![airports-map-scope-all](airports-map-scope-all.png)
