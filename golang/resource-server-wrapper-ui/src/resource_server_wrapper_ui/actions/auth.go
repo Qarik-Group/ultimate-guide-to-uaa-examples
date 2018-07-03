@@ -53,5 +53,6 @@ func AuthCallback(c buffalo.Context) error {
 	// c.Session().Set("scopes", user.Email) // TODO: user.Scopes
 	c.Session().Set("accessToken", user.AccessToken)
 	c.Session().Set("tokenType", user.TokenType)
+	c.Session().Set("scopes", user.RawData["scopes"])
 	return c.Redirect(302, "/")
 }
