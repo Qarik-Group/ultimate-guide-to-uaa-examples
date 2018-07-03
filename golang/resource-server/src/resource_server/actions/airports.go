@@ -26,10 +26,10 @@ var uaa uaaclient.Client
 
 func init() {
 	uaaCfg := &uaaconfig.Config{
-		ClientName:       "airports",
-		ClientSecret:     "airports",
-		UaaEndpoint:      os.Getenv("UAA_URL"),
-		SkipVerification: os.Getenv("UAA_CA_CERT") != "",
+		ClientName:   "airports",
+		ClientSecret: "airports",
+		UaaEndpoint:  os.Getenv("UAA_URL"),
+		CACerts:      os.Getenv("UAA_CA_CERT_FILE"),
 	}
 	logger := lager.NewLogger("airports")
 	// logger.RegisterSink(lager.NewPrettySink(os.Stdout, lager.DEBUG))
