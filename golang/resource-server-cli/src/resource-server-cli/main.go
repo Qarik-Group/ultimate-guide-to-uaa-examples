@@ -35,8 +35,6 @@ type airport struct {
 	Latitude  float64 `json:"Latitude"`
 	Longitude float64 `json:"Longitude"`
 	Altitude  int     `json:"Altitude"`
-	Timezone  float64 `json:"Timezone"`
-	DST       string  `json:"DST"`
 }
 
 func main() {
