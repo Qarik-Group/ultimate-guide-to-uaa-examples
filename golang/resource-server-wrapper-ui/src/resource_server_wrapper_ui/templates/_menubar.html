@@ -1,8 +1,8 @@
 <ul>
   <%= if (!currentUserEmail) { %>
-  <li><a href='/auth/cloudfoundry'>Sign in with Cloud Foundry</a></li>
+  <li><a href='/auth/cloudfoundry'>Sign in with Cloud Foundry UAA</a></li>
   <% } else { %>
     <li><%= currentUserEmail %></li>
-    <li><a href='/logout'>Log out</a></li>
+    <li><a href='/auth/logout'>Log out</a></li>
   <% } %>
 </ul>

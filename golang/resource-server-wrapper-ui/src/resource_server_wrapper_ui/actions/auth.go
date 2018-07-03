@@ -37,6 +37,13 @@ func init() {
 	goth.UseProviders(cf)
 }
 
+func Logout(c buffalo.Context) error {
+	c.Session().Delete("email")
+	c.Session().Delete("accessToken")
+	c.Session().Delete("tokenType")
+	return c.Redirect(302, "/")
+}
+
 func AuthCallback(c buffalo.Context) error {
 	user, err := gothic.CompleteUserAuth(c.Response(), c.Request())
 	if err != nil {

@@ -49,6 +49,7 @@ func App() *buffalo.App {
 		app.GET("/airports.json", AirportFeatureCollectionHandler)
 
 		auth := app.Group("/auth")
+		auth.GET("/logout", Logout)
 		auth.GET("/{provider}", buffalo.WrapHandlerFunc(gothic.BeginAuthHandler))
 		auth.GET("/{provider}/callback", AuthCallback)
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
