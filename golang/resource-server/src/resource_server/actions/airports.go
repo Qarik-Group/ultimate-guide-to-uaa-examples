@@ -32,7 +32,9 @@ func init() {
 		CACerts:      os.Getenv("UAA_CA_CERT_FILE"),
 	}
 	logger := lager.NewLogger("airports")
-	// logger.RegisterSink(lager.NewPrettySink(os.Stdout, lager.DEBUG))
+	if os.Getenv("DEBUG") != "" {
+		logger.RegisterSink(lager.NewPrettySink(os.Stdout, lager.DEBUG))
+	}
 	var err error
 	uaa, err = uaaclient.NewClient(logger, uaaCfg, clock.NewClock())
 	if err != nil {
