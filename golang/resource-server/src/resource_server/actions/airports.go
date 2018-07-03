@@ -2,8 +2,11 @@ package actions
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
+	"strings"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gobuffalo/buffalo"
 	"github.com/gobuffalo/packr"
 )
@@ -30,5 +33,19 @@ func AirportsHandler(c buffalo.Context) error {
 	}
 	var airports []airport
 	json.Unmarshal(airportJSON, &airports)
-	return c.Render(200, r.JSON(airports))
+	length := 10
+
+	if c.Request().Header["Authorization"] != nil {
+		authHeader := c.Request().Header["Authorization"][0]
+		tokenString := strings.Split(authHeader, " ")[1]
+		length = 20
+
+		token, _ := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+			return []byte(""), nil
+		})
+		claims := token.Claims.(jwt.MapClaims)
+		fmt.Printf("%#v\n", claims["scope"])
+	}
+
+	return c.Render(200, r.JSON(airports[:length]))
 }
