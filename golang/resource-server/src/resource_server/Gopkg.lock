@@ -3,6 +3,34 @@
 
 [[projects]]
   branch = "master"
+  name = "code.cloudfoundry.org/clock"
+  packages = ["."]
+  revision = "02e53af36e6c978af692887ed449b74026d76fec"
+
+[[projects]]
+  name = "code.cloudfoundry.org/lager"
+  packages = ["."]
+  revision = "b60e04e119450552243196105bae0d42179ee0ca"
+  version = "v1.1.0"
+
+[[projects]]
+  branch = "master"
+  name = "code.cloudfoundry.org/trace-logger"
+  packages = ["."]
+  revision = "107ef08a939d5be6092ce2b5f171a16aba149cb2"
+
+[[projects]]
+  branch = "master"
+  name = "code.cloudfoundry.org/uaa-go-client"
+  packages = [
+    ".",
+    "config",
+    "schema"
+  ]
+  revision = "ce6599d3f05c55c954834aff892c58e7b668fc70"
+
+[[projects]]
+  branch = "master"
   name = "dmitri.shuralyov.com/text/kebabcase"
   packages = ["."]
   revision = "40e40b42552a9cb37d6e98f4ad31f63ae53ea43a"
@@ -482,6 +510,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "220448e23e327f99bb390e01582d6042f42022c3c2a8570fb607f513da2f0cf7"
+  inputs-digest = "adc64724eb63bd697b31f8b1788f901204e396b9703abaf7aa95410d9a278b25"
   solver-name = "gps-cdcl"
   solver-version = 1
