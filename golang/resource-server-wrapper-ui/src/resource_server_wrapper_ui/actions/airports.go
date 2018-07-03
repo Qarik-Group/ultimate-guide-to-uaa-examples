@@ -2,6 +2,7 @@ package actions
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -10,14 +11,14 @@ import (
 )
 
 type airport struct {
-	Name      string  `json:"Name"`
-	City      string  `json:"City"`
-	ICAO      string  `json:"ICAO"`
-	Latitude  float64 `json:"Latitude"`
-	Longitude float64 `json:"Longitude"`
-	Altitude  int     `json:"Altitude"`
-	Timezone  float64 `json:"Timezone"`
-	DST       string  `json:"DST"`
+	Name      string      `json:"Name"`
+	City      string      `json:"City"`
+	ICAO      string      `json:"ICAO"`
+	Latitude  float64     `json:"Latitude"`
+	Longitude float64     `json:"Longitude"`
+	Altitude  int         `json:"Altitude"`
+	Timezone  interface{} `json:"Timezone"`
+	DST       string      `json:"DST"`
 }
 
 type FeatureCollection struct {
@@ -41,7 +42,11 @@ func AirportFeatureCollectionHandler(c buffalo.Context) error {
 	airportsURL := "http://localhost:9292"
 	airportClient := &http.Client{Transport: http.DefaultTransport}
 	req, err := http.NewRequest("GET", airportsURL, nil)
-	// req.Header.Set("Authorization", fmt.Sprintf("%s %s", token.Type(), token.AccessToken))
+	accessToken := c.Session().Get("accessToken")
+	tokenType := c.Session().Get("tokenType")
+	if accessToken != nil {
+		req.Header.Set("Authorization", fmt.Sprintf("%s %s", tokenType, accessToken))
+	}
 	resp, err := airportClient.Do(req)
 	if err != nil {
 		log.Fatal(err)

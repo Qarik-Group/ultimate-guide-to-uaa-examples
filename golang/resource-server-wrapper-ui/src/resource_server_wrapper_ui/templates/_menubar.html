@@ -1,7 +1,8 @@
 <ul>
-  <%= if (true) { %>
+  <%= if (!currentUserEmail) { %>
   <li><a href='/auth/cloudfoundry'>Sign in with Cloud Foundry</a></li>
   <% } else { %>
+    <li><%= currentUserEmail %></li>
     <li><a href='/logout'>Log out</a></li>
   <% } %>
 </ul>

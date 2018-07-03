@@ -5,6 +5,7 @@ import (
 	"github.com/gobuffalo/buffalo/middleware"
 	"github.com/gobuffalo/buffalo/middleware/ssl"
 	"github.com/gobuffalo/envy"
+	"github.com/gorilla/sessions"
 	"github.com/unrolled/secure"
 
 	"github.com/gobuffalo/buffalo/middleware/csrf"
@@ -26,8 +27,9 @@ var T *i18n.Translator
 func App() *buffalo.App {
 	if app == nil {
 		app = buffalo.New(buffalo.Options{
-			Env:         ENV,
-			SessionName: "_resource_server_wrapper_ui",
+			Env:          ENV,
+			SessionName:  "_resource_server_wrapper_ui",
+			SessionStore: sessions.NewCookieStore([]byte("some session secret")),
 		})
 		// Automatically redirect to SSL
 		app.Use(forceSSL())

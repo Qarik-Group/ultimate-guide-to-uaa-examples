@@ -42,6 +42,9 @@ func AuthCallback(c buffalo.Context) error {
 	if err != nil {
 		return c.Error(401, err)
 	}
-	// Do something with the user, maybe register them/sign them in
-	return c.Render(200, r.JSON(user))
+	c.Session().Set("email", user.Email)
+	// c.Session().Set("scopes", user.Email) // TODO: user.Scopes
+	c.Session().Set("accessToken", user.AccessToken)
+	c.Session().Set("tokenType", "bearer") // TODO: user.TokenType
+	return c.Redirect(302, "/")
 }
