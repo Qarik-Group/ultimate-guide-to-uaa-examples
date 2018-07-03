@@ -10,6 +10,8 @@ import (
 	"github.com/gobuffalo/buffalo/middleware/csrf"
 	"github.com/gobuffalo/buffalo/middleware/i18n"
 	"github.com/gobuffalo/packr"
+
+	"github.com/markbates/goth/gothic"
 )
 
 // ENV is used to help switch settings based on where the
@@ -25,7 +27,7 @@ func App() *buffalo.App {
 	if app == nil {
 		app = buffalo.New(buffalo.Options{
 			Env:         ENV,
-			SessionName: "_resource_server_wrapper_ui_session",
+			SessionName: "_resource_server_wrapper_ui",
 		})
 		// Automatically redirect to SSL
 		app.Use(forceSSL())
@@ -44,6 +46,9 @@ func App() *buffalo.App {
 		app.GET("/", HomeHandler)
 		app.GET("/airports.json", AirportFeatureCollectionHandler)
 
+		auth := app.Group("/auth")
+		auth.GET("/{provider}", buffalo.WrapHandlerFunc(gothic.BeginAuthHandler))
+		auth.GET("/{provider}/callback", AuthCallback)
 		app.ServeFiles("/", assetsBox) // serve files from the public directory
 	}
 
