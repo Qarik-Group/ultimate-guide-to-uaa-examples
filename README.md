@@ -12,3 +12,6 @@ These various applications or tutorials require the following PRs to be merged a
 * https://github.com/cloudfoundry/cf-uaa-lib/pull/33 - explicit `WARNING` for skipping verification of token signing; or if token claims it wasn't signed
 * https://github.com/cloudfoundry/cf-uaa-lib/pull/34 - explicit `TokenCoder.decode_token_expiry`
 * https://github.com/cloudfoundry/cf-uaa-lib/pull/35 - Automatically look up /token_keys to decode access token
+
+* https://github.com/cloudfoundry/cf-uaa-lib/pull/36 - UAA no longer has a /varz endpoint
+* https://github.com/cloudfoundry/uaa/pull/868 - UAA no longer has a /varz endpoint
