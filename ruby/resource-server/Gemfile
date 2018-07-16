@@ -6,7 +6,7 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 
 gem 'bundler'
 gem 'sinatra'
-gem 'cf-uaa-lib'
+gem 'cf-uaa-lib', git: 'https://github.com/drnic/cf-uaa-lib', branch: 'auto-token-keys'
 # gem 'cf-uaa-lib', path: '/Users/drnic/Projects/uaa/cf-uaa-lib'
 
 group :development do

@@ -18,22 +18,25 @@ class App < Sinatra::Base
   end
   puts uaa_options.to_json
 
+  uaa_info = CF::UAA::Info.new(uaa_url, uaa_options)
+  p uaa_info
+
   get '/' do
     content_type 'application/json'
     limit = 10
     if auth_header = request.env['HTTP_AUTHORIZATION']
       begin
-        decoder = CF::UAA::TokenCoder.decode(auth_header.split(' ')[1], verify: false)
+        access_token = auth_header.split(' ')[1]
+        decoder = CF::UAA::TokenCoder.decode(access_token, info: uaa_info)
         puts decoder.to_json
 
         # Unnecessary; but demonstrates that the access_token can be used to make UAA API calls
         # Here the .whoami invokes UAA API GET /userinfo, which requires openid scope.
-        info = CF::UAA::Info.new(uaa_url, uaa_options)
-        who = info.whoami(auth_header)
+        who = uaa_info.whoami(auth_header)
         puts who.to_json
 
         # if decoder["client_id"] == "airports" && decoder["iss"] == "#{ENV['UAA_URL']}/oauth/token"
-        if decoder["iss"] == "#{ENV['UAA_URL']}/oauth/token"
+        if decoder["iss"] == "#{uaa_url}/oauth/token"
           limit = 20
 
           if decoder["scope"].include?("airports.all")

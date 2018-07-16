@@ -1,9 +1,15 @@
-GEM
-  remote: https://rubygems.org/
+GIT
+  remote: https://github.com/drnic/cf-uaa-lib
+  revision: 677359c1d3a89b3f6c475d781548398593ff88f1
+  branch: auto-token-keys
   specs:
     cf-uaa-lib (3.14.3)
       httpclient (~> 2.8, >= 2.8.2.4)
       multi_json (~> 1.12.0, >= 1.12.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
     httpclient (2.8.3)
     multi_json (1.12.2)
     mustermann (1.0.2)
@@ -24,9 +30,9 @@ PLATFORMS
 
 DEPENDENCIES
   bundler
-  cf-uaa-lib
+  cf-uaa-lib!
   shotgun
   sinatra
 
 BUNDLED WITH
-   1.16.1
+   1.16.2
