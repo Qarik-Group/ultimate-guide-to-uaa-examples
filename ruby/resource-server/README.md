@@ -1,10 +1,10 @@
 # Applications filter results from UAA user scopes
 
-First, add `uaa-deployment` into the `$PATH` and setup `$UAA_URL`/`$UAA_CA_CERT`:
+First, add `uaa-deployment` into the `$PATH` and setup `$UAA_URL`:
 
 ```text
-source <(path/to/uaa-deployment/bin/uaa-deployment env)
-uaa-deployment auth-client
+source <(path/to/uaa-deployment-cf/bin/u env)
+u auth-client
 ```
 
 Create some demo users:
@@ -49,6 +49,7 @@ Next, authenticate one of the users with the UAA to get an "access_token":
 ```text
 uaa get-password-token airports -s airports -u airports-no-scope -p airports-no-scope
 uaa context --access_token
+bosh int <(uaa context) --path /access_token
 uaa context --auth_header
 ```
 

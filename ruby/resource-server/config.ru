@@ -29,6 +29,7 @@ class App < Sinatra::Base
         access_token = auth_header.split(' ')[1]
         decoder = CF::UAA::TokenCoder.decode(access_token, info: uaa_info)
         puts decoder.to_json
+        limit = 15
 
         # Unnecessary; but demonstrates that the access_token can be used to make UAA API calls
         # Here the .whoami invokes UAA API GET /userinfo, which requires openid scope.

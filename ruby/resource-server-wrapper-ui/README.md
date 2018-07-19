@@ -6,10 +6,11 @@ The Airports API (`resource-server`) is now a backend application - only accesse
 
 The User logins to the UAA via redirection from this web app, and its requests for map data (geojson features) are first forwarded to the backend application with the UAA access token. The resource server determines what airports and attributes the user can see. This application then views those airports.
 
-Setup $UAA_URL/$UAA_CA_CERT
+Setup `$UAA_URL`:
 
 ```text
-source <(path/to/uaa-deployment/bin/uaa-deployment env)
+source <(path/to/uaa-deployment-cf/bin/u env)
+u auth-client
 ```
 
 Create UAA client:

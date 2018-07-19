@@ -1,10 +1,10 @@
 # Ruby OmniAuth - Simple Login Only
 
-First, add `uaa-deployment` into the `$PATH` and setup `$UAA_URL`/`$UAA_CA_CERT`:
+First, add `uaa-deployment` into the `$PATH` and setup `$UAA_URL`:
 
 ```text
-source <(path/to/uaa-deployment/bin/uaa-deployment env)
-uaa-deployment auth-client
+source <(path/to/uaa-deployment-cf/bin/u env)
+u auth-client
 ```
 
 Create a UAA client that includes only `openid` (we will add `scim.read` later):

@@ -2,10 +2,10 @@
 
 In another terminal, ensure that the Airports API app is running at https://localhost:9292.
 
-In your current terminal, setup `$UAA_URL`/`$UAA_CA_CERT`:
+In your current terminal, setup `$UAA_URL`:
 
 ```text
-source <(path/to/uaa-deployment/bin/uaa-deployment env)
+source <(path/to/uaa-deployment-cf/bin/u env)
 ```
 
 

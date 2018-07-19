@@ -3,17 +3,18 @@
 First, create a UAA client:
 
 ```text
-uaa-deployment auth-client
+source <(path/to/uaa-deployment-cf/bin/u env)
+u auth-client
 uaa create-client omniauth-login-only -s omniauth-login-only \
   --authorized_grant_types authorization_code,refresh_token \
   --scope openid \
   --redirect_uri http://localhost:9292/auth/cloudfoundry/callback,http://127.0.0.1:9292/auth/cloudfoundry/callback
 ```
 
-Next, setup `$UAA_URL`/`$UAA_CA_CERT`:
+Next, setup `$UAA_URL`:
 
 ```text
-source <(path/to/uaa-deployment/bin/uaa-deployment env)
+source <(path/to/uaa-deployment-cf/bin/u env)
 ```
 
 Next, run the app:
