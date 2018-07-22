@@ -11,10 +11,23 @@ uaa create-client omniauth-login-only -s omniauth-login-only \
   --redirect_uri http://localhost:9292/auth/cloudfoundry/callback,http://127.0.0.1:9292/auth/cloudfoundry/callback
 ```
 
-Next, setup `$UAA_URL`:
+Create a UAA user with which to authenticate in the browser:
 
 ```text
-source <(path/to/uaa-deployment-cf/bin/u env)
+uaa create-user drnic -v \
+  --email drnic@starkandwayne.com \
+  --givenName "Dr Nic" \
+  --familyName "Williams" \
+  --password drnic_secret
+```
+
+Check that `$UAA_URL` related env vars are setup (this is done automatically via `source <(.../u env)` above)
+
+```text
+$ env | grep UAA
+UAA_URL=https://192.168.50.6:8443
+UAA_CA_CERT=-----BEGIN CERTIFICATE----- ...
+UAA_CA_CERT_FILE=/var/folders/wd/xnncwqp96rj0v1y2nms64mq80000gn/T/tmp.biR9hDnr/ca.pem
 ```
 
 Next, run the app:
@@ -24,7 +37,15 @@ bundle
 bundle exec rackup
 ```
 
-Visit https://localhost:9292 and commence the login sequence to be redirected to the UAA, and ultimately returned to the app.
+Visit http://localhost:9292 and commence the login sequence to be redirected to the UAA.
+
+Login as your UAA users (e.g. `drnic` and `drnic_secret`).
+
+As this user, authorize the UAA to allow the `omniauth-login-only` client to "Access profile information, i.e. email, first and last name, and phone number":
+
+![omniauth-login-only-authorization](omniauth-login-only-authorization.png)
+
+You are then returned to the `omniauth-uaa-oauth2` sample application.
 
 It will output the data returned from the UAA response token, for example:
 

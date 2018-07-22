@@ -7,4 +7,4 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gem 'bundler'
 gem 'sinatra'
 gem 'omniauth'
-gem 'omniauth-uaa-oauth2', git: 'https://github.com/drnic/omniauth-uaa-oauth2', branch: 'avoid-deprecation-warning'
+gem 'omniauth-uaa-oauth2', '~> 1.0'
