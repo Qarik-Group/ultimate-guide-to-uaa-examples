@@ -1,5 +1,9 @@
 # Ruby OmniAuth - Simple Login Only
 
+This folder contains a very simple Ruby web app to allow a user to "Login with Cloud Foundry" using your own UAA. You can run the script using Docker or your local Ruby environment.
+
+## Setup
+
 First, create a UAA client:
 
 ```text
@@ -30,9 +34,21 @@ UAA_CA_CERT=-----BEGIN CERTIFICATE----- ...
 UAA_CA_CERT_FILE=/var/folders/wd/xnncwqp96rj0v1y2nms64mq80000gn/T/tmp.biR9hDnr/ca.pem
 ```
 
-Next, run the app:
+## Run the server
+
+You can run the Ruby server using Docker or your local Ruby environment.
+
+With Docker:
 
 ```text
+docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT starkandwayne/uaa-example-omniauth-login-only
+```
+
+With Ruby:
+
+```text
+git clone https://github.com/starkandwayne/ultimate-guide-to-uaa-examples
+cd ultimate-guide-to-uaa-examples/ruby/omniauth-login-only
 bundle
 bundle exec rackup
 ```
