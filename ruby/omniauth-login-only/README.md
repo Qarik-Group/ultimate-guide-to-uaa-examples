@@ -13,6 +13,8 @@ If you do not have access to a dev/test UAA, you can easily run your own.
     ```text
     source <(path/to/uaa-deployment-cf/bin/u env)
     u auth-client
+
+    echo $UAA_URL
     ```
 
 * https://github.com/starkandwayne/uaa-deployment - run a UAA on your local VirtualBox, or a production-ready UAA on any cloud infrastructure using BOSH
@@ -22,6 +24,9 @@ If you do not have access to a dev/test UAA, you can easily run your own.
     ```text
     source <(path/to/uaa-deployment/bin/u env)
     u auth-client
+
+    echo $UAA_URL
+    echo $UAA_CA_CERT_FILE
     ```
 
 * https://github.com/cloudfoundry-incubator/cfdev - run a local Cloud Foundry, with its UAA, on your local machine using LinuxKit
@@ -31,7 +36,12 @@ If you do not have access to a dev/test UAA, you can easily run your own.
     ```text
     uaa target https://uaa.v3.pcfdev.io/ --skip-ssl-validation
     uaa get-client-credentials-token admin -s admin-client-secret
+
+    export UAA_URL=https://login.v3.pcfdev.io/
+    export UAA_CA_CERT=skip-verification
     ```
+
+    TODO: setup $UAA_CA_CERT_FILE from cfdev credhub
 
 ## Setup
 
@@ -54,7 +64,7 @@ uaa create-user drnic -v \
   --password drnic_secret
 ```
 
-Check that `$UAA_URL` related env vars are setup (this is done automatically via `source <(.../u env)` above)
+Check that `$UAA_URL` related env vars are setup (this is done automatically via `source <(.../u env)` above, or manually)
 
 ```text
 $ env | grep UAA
