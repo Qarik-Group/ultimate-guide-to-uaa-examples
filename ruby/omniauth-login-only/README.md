@@ -39,8 +39,11 @@ If you do not have access to a dev/test UAA, you can easily run your own.
     uaa target https://uaa.v3.pcfdev.io/ --skip-ssl-validation
     uaa get-client-credentials-token admin -s admin-client-secret
 
-    export UAA_URL=https://login.v3.pcfdev.io/
-    export UAA_CA_CERT=skip-verification
+    export UAA_URL=https://login.v3.pcfdev.io
+    export UAA_CA_CERT=$(bosh int <(bosh -d cf manifest) --path /instance_groups/name=api/jobs/name=routing-api/properties/uaa/ca_cert)
+    tmp=$(mktemp -d)
+    export UAA_CA_CERT_FILE=$tmp/uaa.ca
+    echo "$UAA_CA_CERT" > ${UAA_CA_CERT_FILE}
     ```
 
     TODO: setup $UAA_CA_CERT_FILE from cfdev credhub
@@ -82,7 +85,7 @@ You can run the Ruby server using Docker or your local Ruby environment.
 With Docker:
 
 ```text
-docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT -e UAA_CA_CERT_FILE=$UAA_CA_CERT_FILE \
+docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT \
     starkandwayne/uaa-example-omniauth-login-only
 ```
 
@@ -119,6 +122,6 @@ Why? The browser still redirected you to your UAA, but since you are now already
 
 ```text
 docker build -t starkandwayne/uaa-example-omniauth-login-only .
-docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT -e UAA_CA_CERT_FILE=$UAA_CA_CERT_FILE \
+docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT \
     starkandwayne/uaa-example-omniauth-login-only
 ```
