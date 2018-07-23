@@ -31,6 +31,8 @@ If you do not have access to a dev/test UAA, you can easily run your own.
 
 * https://github.com/cloudfoundry-incubator/cfdev - run a local Cloud Foundry, with its UAA, on your local machine using LinuxKit
 
+    To install the [`uaa`](https://github.com/cloudfoundry-incubator/uaa-cli/) CLI, see https://github.com/starkandwayne/uaa-cli-releases#readme
+
     To target and authorize the `uaa` CLI to your UAA:
 
     ```text
