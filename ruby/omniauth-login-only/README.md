@@ -2,13 +2,42 @@
 
 This folder contains a very simple Ruby web app to allow a user to "Login with Cloud Foundry" using your own UAA. You can run the script using Docker or your local Ruby environment.
 
+## Deploy UAA
+
+If you do not have access to a dev/test UAA, you can easily run your own.
+
+* https://github.com/starkandwayne/uaa-deployment-cf - run a production-ready UAA on any Cloud Foundry, using either PostgreSQL or MySQL service instance; also allows for you to customize the HTML theme for your UAA
+
+    To target and authorize the `uaa` CLI to your UAA:
+
+    ```text
+    source <(path/to/uaa-deployment-cf/bin/u env)
+    u auth-client
+    ```
+
+* https://github.com/starkandwayne/uaa-deployment - run a UAA on your local VirtualBox, or a production-ready UAA on any cloud infrastructure using BOSH
+
+    To target and authorize the `uaa` CLI to your UAA:
+
+    ```text
+    source <(path/to/uaa-deployment/bin/u env)
+    u auth-client
+    ```
+
+* https://github.com/cloudfoundry-incubator/cfdev - run a local Cloud Foundry, with its UAA, on your local machine using LinuxKit
+
+    To target and authorize the `uaa` CLI to your UAA:
+
+    ```text
+    uaa target https://uaa.v3.pcfdev.io/ --skip-ssl-validation
+    uaa get-client-credentials-token admin -s admin-client-secret
+    ```
+
 ## Setup
 
 First, create a UAA client:
 
 ```text
-source <(path/to/uaa-deployment-cf/bin/u env)
-u auth-client
 uaa create-client omniauth-login-only -s omniauth-login-only \
   --authorized_grant_types authorization_code,refresh_token \
   --scope openid \
