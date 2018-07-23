@@ -70,7 +70,8 @@ You can run the Ruby server using Docker or your local Ruby environment.
 With Docker:
 
 ```text
-docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT starkandwayne/uaa-example-omniauth-login-only
+docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT -e UAA_CA_CERT_FILE=$UAA_CA_CERT_FILE \
+    starkandwayne/uaa-example-omniauth-login-only
 ```
 
 With Ruby:
@@ -106,5 +107,6 @@ Why? The browser still redirected you to your UAA, but since you are now already
 
 ```text
 docker build -t starkandwayne/uaa-example-omniauth-login-only .
-docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT starkandwayne/uaa-example-omniauth-login-only
+docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT -e UAA_CA_CERT_FILE=$UAA_CA_CERT_FILE \
+    starkandwayne/uaa-example-omniauth-login-only
 ```

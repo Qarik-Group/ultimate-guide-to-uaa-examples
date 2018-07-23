@@ -42,13 +42,18 @@ use Rack::Session::Cookie,
   secret: ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
 
 use OmniAuth::Builder do
-  provider :cloudfoundry, 'omniauth-login-only', 'omniauth-login-only', {
+  options = {
     auth_server_url: ENV['UAA_URL'],
     token_server_url: ENV['UAA_URL'],
-    scope: %w[openid],
-    skip_ssl_validation: ENV['UAA_CA_CERT'] != '',
     redirect_uri: 'http://localhost:9292/auth/cloudfoundry/callback'
   }
+  if ENV['UAA_CA_CERT_FILE'] && File.exists?(ENV['UAA_CA_CERT_FILE']) && !File.read(ENV['UAA_CA_CERT_FILE']).strip.empty?
+    options[:ssl_ca_file] = ENV['UAA_CA_CERT_FILE']
+  else
+    options[:skip_ssl_validation] = !!ENV['UAA_CA_CERT']
+  end
+
+  provider :cloudfoundry, "omniauth-login-only", "omniauth-login-only", options
 end
 
 run App.new
