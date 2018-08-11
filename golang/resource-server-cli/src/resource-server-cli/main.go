@@ -47,6 +47,13 @@ func main() {
 		os.Exit(1)
 	}
 
+	if opts.Username != "" {
+		err := os.Remove(opts.UserConfigPath)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	if _, err := os.Stat(opts.UserConfigPath); os.IsNotExist(err) {
 		username := opts.Username
 		if username == "" {
