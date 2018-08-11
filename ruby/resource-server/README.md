@@ -3,7 +3,7 @@
 First, add `uaa-deployment` into the `$PATH` and setup `$UAA_URL`:
 
 ```text
-source <(~/workspace/uaa-deployment-cf/bin/u env)
+source <(~/workspace/uaa-deployment*/bin/u env)
 u auth-client
 ```
 
