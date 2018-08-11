@@ -1,5 +1,7 @@
 # Example client applications in Ruby
 
+This folder contains a series of example client applications. Each subfolder contains one application and a progressive tutorial in its README. The subsequent folders assume that you have completed the preceding application tutorials.
+
 The sample applications:
 
 * [Resource Server](resource-server/) - A simple API that provides a list of Australian airports. Guests only receive 10 results. Authenticated users receive more. Users who have specific UAA claims/scopes can receive all the results.
