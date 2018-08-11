@@ -9,17 +9,17 @@ The User logins to the UAA via redirection from this web app, and its requests f
 Setup `$UAA_URL`:
 
 ```text
-source <(path/to/uaa-deployment-cf/bin/u env)
+source <(path/to/uaa-deployment*/bin/u env)
 u auth-client
 ```
 
-Create UAA client:
+Create UAA client to support the authorization code grant, for the local web app that will be running on `localhost:9393`:
 
 ```text
 uaa create-client airports-map -s airports-map \
   --authorized_grant_types authorization_code,refresh_token \
   --scope openid,airports-50,airports-all \
-  --redirect_uri http://localhost:9393/auth/cloudfoundry/callback
+  --redirect_uri http://localhost:9393/auth/cloudfoundry/callback,http://127.0.0.1:9393/auth/cloudfoundry/callback
 ```
 
 You can run this app and the backend `resource-server` (Airports API) using Docker Compose:
