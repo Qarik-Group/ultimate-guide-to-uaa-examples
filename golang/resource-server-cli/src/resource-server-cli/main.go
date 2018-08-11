@@ -100,6 +100,9 @@ func main() {
 	json.Unmarshal(storedToken, &token)
 
 	api, err := uaa.NewWithToken(opts.UAAURL, opts.UAAZoneID, token)
+	if err != nil {
+		log.Fatal(err)
+	}
 	api.Verbose = opts.Verbose
 	if opts.UAACACert != "" {
 		api.SkipSSLValidation = true
