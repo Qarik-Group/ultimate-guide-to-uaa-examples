@@ -3,7 +3,7 @@
 First, add `uaa-deployment` into the `$PATH` and setup `$UAA_URL`:
 
 ```text
-source <(path/to/uaa-deployment-cf/bin/u env)
+source <(~/workspace/uaa-deployment-cf/bin/u env)
 u auth-client
 ```
 
@@ -35,28 +35,27 @@ $ curl -s http://localhost:9292 | jq length
 10
 ```
 
-Now create a dedicated Airports client:
+Now create a dedicated `airports` UAA client to allow other client applications to access your resource server on behalf of users:
 
 ```text
 uaa create-client airports -s airports \
-  --authorized_grant_types password,authorization_code,refresh_token \
-  --scope airports.all,airports.50,openid \
-  --redirect_uri http://localhost:9876
+  --authorized_grant_types password,refresh_token \
+  --scope airports.all,airports.50,openid
 ```
 
 Next, authenticate one of the users with the UAA to get an "access_token":
 
 ```text
 uaa get-password-token airports -s airports -u airports-no-scope -p airports-no-scope
-uaa context --access_token
 bosh int <(uaa context) --path /access_token
-uaa context --auth_header
+
+auth_header="bearer $(bosh int <(uaa context) --path /access_token)"
 ```
 
 Pass the `uaa context --auth_header` into the `-H 'Authorization:'` below:
 
 ```text
-$ curl -s -H "Authorization: $(uaa context --auth_header)" http://localhost:9292 | jq length
+$ curl -s -H "Authorization: ${auth_header}" http://localhost:9292 | jq length
 30
 ```
 
@@ -85,14 +84,18 @@ Login as `airports-50` user and see that the Airports API now returns 50 results
 
 ```text
 uaa get-password-token airports -s airports -u airports-50 -p airports-50
-curl -s -H "Authorization: $(uaa context --auth_header)" http://localhost:9292 | jq length
+auth_header="bearer $(bosh int <(uaa context) --path /access_token)"
+
+curl -s -H "Authorization: ${auth_header}" http://localhost:9292 | jq length
 ```
 
 Finally, login as `airports-all` user and see that the Airports API now returns all 297 results:
 
 ```text
 uaa get-password-token airports -s airports -u airports-all -p airports-all
-curl -s -H "Authorization: $(uaa context --auth_header)" http://localhost:9292 | jq length
+auth_header="bearer $(bosh int <(uaa context) --path /access_token)"
+
+curl -s -H "Authorization: ${auth_header}" http://localhost:9292 | jq length
 ```
 
 ## Docker
