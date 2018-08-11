@@ -5,7 +5,7 @@ In another terminal, ensure that the Airports API app is running at https://loca
 In your current terminal, setup `$UAA_URL`:
 
 ```text
-source <(path/to/uaa-deployment-cf/bin/u env)
+source <(~/workspace/uaa-deployment*/bin/u env)
 ```
 
 
@@ -71,3 +71,13 @@ password > ************
 | Gold Coast Airport                  | YBCG | 21       |
 ...297 results...
 ```
+
+## Errors
+
+Perhaps you run `cli.rb` and get the following error:
+
+```ruby
+{"error"=>"invalid_token", "error_description"=>"Invalid key ID: legacy-token-key"}
+```
+
+In this case, delete the pre-existing `.user.json` cache file, and run `bundle exec cli.rb` again.
