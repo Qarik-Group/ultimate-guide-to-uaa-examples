@@ -1,5 +1,20 @@
 # Example applications using Cloud Foundry UAA
 
+This repository attempts to implement a series of similar example applications, in different programming languages.
+
+Currently, the applications are implmented in:
+
+* [Ruby](/ruby)
+* [Go](/golang)
+
+The sample applications:
+
+* Resource Server - A simple API that provides a list of Australian airports. Guests only receive 10 results. Authenticated users receive more. Users who have specific UAA claims/scopes can receive all the results.
+* Resource Server CLI - A CLI for interacting with the above Resource Server.
+* Resource Server Web UI - A frontend wrapper UI for the backend Resource Server: a map showing Australian airports. Guest users see only 10 airports. Once a user has been authenticated via your UAA, they will begin to see more airports. Add the user to the `airports.all` group and they will be authorized to see all the airports.
+
+## Dependencies on pull requests
+
 These various applications or tutorials require the following PRs to be merged and/or releases cut:
 
 * https://github.com/cloudfoundry-incubator/uaa-cli/pull/12 - `uaa context --auth_header`
