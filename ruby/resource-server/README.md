@@ -1,6 +1,8 @@
 # Applications filter results from UAA user scopes
 
-First, add `uaa-deployment` into the `$PATH` and setup `$UAA_URL`:
+You can run this example application and integrate with any UAA. The tutorial makes some small assumptions that you're using either [`uaa-deployment-cf`](https://github.com/starkandwayne/uaa-deployment-cf/) or [`uaa-deployment`](https://github.com/starkandwayne/uaa-deployment/) for deployment and setting up local env vars.
+
+First, setup your local environment with `$UAA_URL` and `$UAA_CA_CERT`, and authenticate the `uaa` CLI with `uaa.admin` scope:
 
 ```text
 source <(~/workspace/uaa-deployment*/bin/u env)
@@ -21,7 +23,13 @@ uaa create-user airports-no-scope --password airports-no-scope \
   --givenName "Airports" --familyName "No Scope"
 ```
 
-Run the Airports API application:
+Either run the Airports API application (our Resource Server) via Docker:
+
+```text
+docker run -ti -p 9292:9292 -e UAA_URL=$UAA_URL -e UAA_CA_CERT=$UAA_CA_CERT starkandwayne/uaa-example-resource-server
+```
+
+Or run the Airports API application via local Ruby:
 
 ```text
 bundle
