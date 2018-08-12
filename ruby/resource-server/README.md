@@ -64,7 +64,7 @@ Pass the `uaa context --auth_header` into the `-H 'Authorization:'` below:
 
 ```text
 $ curl -s -H "Authorization: ${auth_header}" http://localhost:9292 | jq length
-30
+20
 ```
 
 The airports app attempts to decode the access token, to confirm it originated from its UAA and used the `airports` client ID, and if successful will expand the limit to 20 airports. The decoded token is dumped to the logs:
@@ -76,7 +76,7 @@ The airports app attempts to decode the access token, to confirm it originated f
 Create some user groups/client scopes that might grant to users:
 
 ```text
-uaa-deployment auth-client
+u auth-client
 uaa create-group airports.all -d "Display all airports"
 uaa create-group airports.50 -d "Display 50 airports"
 ```
