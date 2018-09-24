@@ -46,10 +46,8 @@ class App < Sinatra::Base
             limit = 50
           end
         end
-      rescue CF::UAA::TargetError => e
-        return e.info.to_json
-      rescue CF::UAA::InvalidToken => e
-        return e.info.to_json
+      rescue CF::UAA::UAAError => e
+        return {"error": e.message}.to_json
       end
     end
     puts "Limit: #{limit}"
